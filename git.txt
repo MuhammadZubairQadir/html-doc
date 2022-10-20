@@ -1,0 +1,493 @@
+
+Push Code With HTTPS:
+
+last night it was showing an error of the authentication 
+solution: 
+Go to GitHub setting >> developer setting >>personal access token >> generate new token 
+copy access token number 
+Again push code
+when authentication require , put GitHub account username 
+and instead of a password put personal access token number (that we create in developer setting)
+that's it , it will push code through HTTPS to the remote GitHub repository 
+Push Code With SSH :
+to push code with SSH we need to generate SSH key first
+first check ssh key exist or not command : ls -al ~/.ssh 
+Run This command:
+ssh-keygen -t rsa -C "your_email@yahoo.com"
+Verify SSH key pair if exist
+ Command : ls -l ~/.ssh/id_*.pub
+Generate new ssh key pair Command:   ssh-keygen -t rsa -b 4096 -C "your_email@yahoo.com" OR ssh-keygen
+verify SSH key pair generated Command : ls ~/.ssh/id_*
+ copy public key to ubuntu remote server  Command : ssh-copy-id user_name @server_IPaddress
+then go to ubuntu home folder turn on Hiden file option to see hidden files 
+if there is a file with file name id_rsa.pub
+copy the content of this file and paste in new SSH key section in github 
+new ssh key for ubuntu created 
+now pushing code through SSH working well
+ 
+Remaining Commands :
+git branch -m <OLD-BRANCH-NAME> <NEW-BRANCH-NAME> (Rename local branch )
+git push origin <OLD-BRANCH-NAME> <NEW-BRANCH-NAME> (Rename remote branch )
+git merge [branch1] [branch2] (merge branch 1 into branch 2 )
+git remote show [name] (show remote detail)
+git remote rm [name] (delete remote)
+git diff HEAD (difference between working and head)
+git diff HEAD (unstage changes to file)
+git commit --amend -m "CHANGE-COMMIT-MESSAGE" (change last commit-msg)
+git reset --hard origin/BRANCH-NAME (reset last commit)
+merging remote to local branch
+git fetch REMOTE-NAME
+git merge REMOTE-NAME/BRANCH-NAME (merge remote branch with local)
+git pull <REMOTE-NAME > <BRANCH-NAME>
+
+gir clean -f  (remove untracked file )
+git clean -fd (remove untracked directories )
+git rm -r --cached . (untrack  tracked files in gitignore )
+
+
+Git&Github Quiz
+W3school Git Quiz
+25/25
+Proprofs Git&Github Quiz
+93/100
+
+Also these two Challenge are completed :
+
+Some Critical Commands
+
+STASH
+git stash save <commit msg> (to temporary save a commit)
+git stash lisht (to show all stash)
+git stash show (to see add or change in stash)
+git stash apply <stash ID> (to retrieve stash back to code)
+git stash drop <stash> (to remove stash from stash list)
+git stash clear (to remove more than one stashes from list)
+
+MERGE
+git merge <branch> (used to merge new branch to the current branch)
+git merge --no-ff <branch> (do same as above but always generates a merge commit even it is a fast forward merge)
+
+
+
+Cherry-pick
+git cherry-pick <commit-hash>
+git cherry-pick --skip ( to skip this patch)
+git cherry-pick --abort ( to cancel the cherry-pick operation)
+git cherry-pick --continue (to continue cherry picking when using multiple commits )
+git cherry-pick --quit (clear the state after the failed cherr pick)
+git cherry-pick --skip ( Skip the current commit and continue with the rest of the sequence)
+
+Rebase
+git rebase <branch> (transfer completed work from one branch to another)
+git rebase -i <branch>  (run git rebase interactively using the -i flag)
+.
+.
+.
+Git Fork 
+A fork is a rough copy of a repository.it is used to propose changes for bug fixing. 
+Fork the repository.
+Make the fix.
+Forward a pull request to the project owner.
+
+
+Github Branch Incorporation
+Here Is The Problem 
+ we have to choose MERGE or REBASE to incorporate master into feature branch.
+solution with both
+
+Using Git Merge 
+1st do two commits  on branch master
+then  make new branch feature and shift to it 
+do 3 commits on branch feature and checkout to master 
+do 2 commits to master and checkout to feature
+total 7 commits including both branches 
+NOW  , use Git merge master to merge master into feature branch 
+it will create one extra commit with changing of both branches , that also a difference of merge and rebase 
+more over , merge doesn't rewrite commit history , just add one new commit.
+Highlighted commit is the 8th commit that created with the merge command 
+
+it add one more commit to incorporate instead of rewriting hisotry
+
+Before Rebase we need to remove last merge commit in feature branch :  
+
+reset last commit
+
+Using Git Rebase
+do same as in merge, 1st 7 commits with sequence 
+then go to the feature branch and use git rebase master 
+rebase take all commits from both branches and applies them one by one 
+The main thing, Rebase rewrite commit history.
+But doesn't create an extra commit for merge 
+
+
+Difference
+Pull Request 
+
+pending .....
+
+Pull Request 
+First copy link of repo in which you want to pull change or data 
+Open that repo in your GitHub 
+fork the repo (fork option available in right upper corner )
+it will make a rough copy of a repository in my GitHub account
+now make changes to repo  or fix bugs ,errros 
+then  purpose changes to owner of repo 
+if he/she approve your code will merges to owner original repo 
+otherwise he/she can do commit a "msg" to change more things or can decline your purpose changes.
+OWNER branch status after the successful pull request
+
+GITK
+Gitk is a graphical repository browser. 
+it's a GUI application to see git log .
+ Basically it shows us the history of a repository. 
+How to install on UBUNTU:
+
+sudo apt-get update                (1st update apt database)
+sudo apt-get install gitk       (install gitk using apt-get)
+sudo apt-get remove gitk           (To uninstall GITK packages)
+sudo apt-get -y autoremove gitk    (remove gitk and it's dependencies)
+HERE IT IS
+
+
+
+How to run rebase interactively in Git:
+
+git rebase -i master
+# p, pick = use commit
+# r, reword = use commit, but edit the commit message
+# e, edit = use commit, but stop for amending
+# s, squash = use commit, but meld into previous commit
+# f, fixup = like "squash", but discard this commit's log message
+# x, exec = run command (the rest of the line) using shell
+# d, drop = remove commit
+GIST
+Every gist is a Git repository, which means that it can be forked and cloned.
+If you are signed in to GitHub when you create a gist, the gist will be associated
+with your account and you will see it in your list of gists when you navigate to your gist home page.
+There are two types of gist : 
+
+Cloning A Gist 
+cloning a gist is same as a cloning a repo
+just this command 
+git clone <gist url>
+clone with https 
+clone with ssh key
+Gist Vs Repo
+Gist is a simple way to share snippets and pastes with others. 
+Whereas Repo is simply a place where the history of your work is stored.
+Fork Vs. Clone
+Sometimes people considered the fork as clone command because of their property. 
+Both commands are used to create another copy of the repository. 
+But the significant difference is that the fork is used to create a server-side copy.
+ Clone is used to create a local copy of the repository.
+
+There is no particular command for forking the repository; instead, it is a service provided by a third-party Git service like GitHub. 
+Comparatively, git clone is a command-line utility that is used to create a local copy of the project.
+GitHub Markdown
+Markdown is a technique to make the text remarkable and classy on GitHub. We can manage the text style on the web.
+Also, we can set the formats of words like bold or italic. We can also add images and create a list by the GitHub markdown.
+The places where the markdown can be used;
+Gists
+Comments in Issues and Pull Requests
+Files with the .md or .markdown extension
+
+Some examples are below :
+# heading1 (big font size)
+## heading 2 (small font size)
+### heading 3 (too small font size)
+**Bold text**
+~~Strikethrough~~ (Strikethrough)
+_italic style_ 
+Links :
+ [ website name ]{ www.example.com}  websitename
+Image : 
+ image ![image name ] { image URL or path}
+code bar :
+``` javascript
+var name = "zubi";
+console.log (name );
+```
+Tables 
+|name|roll | class|
+|----|----|----| 
+list 
+1 .list oe 
+2.list two
+3.list three
+<sub> This is a script text </sub>
+
+That all above syntax will work in github readme.md file
+e.g
+
+
+GitHub Desktop For Ubuntu
+Run these commands in terminal with same  sequence : 
+sudo wget https://github.com/shiftkey/desktop/releases/download/release-2.9.3-linux3/GitHubDesktop-linux-2.9.3-linux3.deb
+sudo apt-get install gdebi-core 
+sudo gdebi GitHubDesktop-linux-2.9.3-linux3.deb
+It will open github desktop after installation complete.....
+Merge and rebase flow :
+
+
+moreover we can manually rewrite commit history  in Vim Editor 
+Rewriting Git History 
+Amending commits
+The git commit --amend command is a convenient way to modify the most recent commit. 
+It lets you combine staged changes with the previous commit instead of creating an entirely new commit. 
+git commit --amend --no-edit
+It just changes the id of the last commit. but it will not change the commit-msg .
+To change most recent commit-msg use this command :
+git commit --amend -m "an updated commit message"
+ 
+Rewording commit messages
+This will open your commit editor. You can simply reword the message and you're done.
+But what if you only noticed the bad message after you've made several commits?
+Firstly, find out how far back the commit was:
+git log --oneline     (commit history in oneline mod)
+git rebase -i HEAD~2   (it will move head to 2nd last commit in commit history)
+when you press enter it will move you to VIM editor where you can change wording:
+
+you have to write "reword" in the place of pick at the start of commit line
+here you will write the commit-msg you wanna reword ;
+
+
+Press ESC + : + W + Q to exit from Vim editor
+Now see git rebase rewrite the history , change commit msg and commit hash at the same place
+
+Deleting commits
+f you remove a commit from the interactive rebase file, or if you comment it out,
+ the commit will simply disappear as if it had never been checked in.
+for deleting specific commit we need to move head to that commit :
+git rebase -i HEAD~3
+it will open last 3 commit in VIM
+
+use drop internactive command to remove commit
+
+write it in place of pick
+
+
+here it is prss 
+git log --oneline 
+commit gone 
+Reordering commits
+Interactive Rebase also allows you to reorder commits. 
+Simply drag and drop a commit between two existing commits to reorder history.
+suppose we want to reorder last two commit 
+git rebase -i HEAD~2
+here we'll not use any interactive command ;
+just swap these two commtis ;
+
+
+Squashing commits
+ Two other commands rebase-interactive offers us are:
+squash (s for short), which melds the commit into the previous one (the one in the line before)
+fixup (f for short), which acts like “squash”, but discards this commit’s message
+pick last three commits
+git rebase -i HEAD~3
+go in VIM editor 
+
+
+write fixup before last two commits , it will merge last two commit into 1st commit. and 1st commit msg will only show after merging.
+
+Splitting commits
+Splitting commit will split one commit into two different commits 
+pick nay of three or two commits in interactive rebase command
+git rebase -i HEAD~3
+
+
+write before commit whome you want to split into two commits
+
+
+when we exit from VIM it open a special branch like this .....
+
+
+check git status
+Interactive rebase is in progress : 
+
+
+Now what we have to do is to Unstage all the files :
+git reset HEAD^ 
+check all untracked  files 
+
+
+we need to add and commit these three files into two different commits .
+use git command 
+git rebase --continue
+to complete special branch process 
+
+
+Here is our splitted commits 
+
+
+Git Tags
+Git has the ability to tag specific points in a repository’s history as being important.
+people use this functionality to mark release points (v1.0, v2.0 and so on). I
+Listing Your Tags
+Listing the existing tags in Git is straightforward. Just type git tag (with optional -l or --list):
+git tag
+git tag -- list 
+if you have more than one or like 500 tag 
+and you want to look at only specific series 
+git tag -l "v1.8.5*"
+v1.8.5
+v1.8.5-rc0
+v1.8.5-rc1
+v1.8.5-rc2
+Creating Tags
+Git supports two types of tags: lightweight and annotated.
+
+lightweight
+A lightweight tag is very much like a branch that doesn’t change — it’s just a pointer to a specific commit.
+This is basically the commit checksum stored in a file — no other information is kept. To create a lightweight tag, don’t supply any of the -a, -s, or -m options, just provide a tag name:
+git tag <tag_name >
+This time, if you run git show on the tag, you don’t see the extra tag information. The command just shows the commit:
+
+Annotated 
+
+Annotated tags are stored as full objects in the Git database. They’re checksummed; contain the tagger name, email, and date; have a tagging message  and can be signed and verified with GNU Privacy Guard (GPG). It’s generally recommended that you create annotated tags so you can have all this information; but if you want a temporary tag or for some reason don’t want to keep the other information, lightweight tags are available too.
+
+Creating an annotated tag in Git is simple. The easiest way is to specify -a when you run the tag command:
+git tag -a  <tag_name> -m "tag msg"
+we can look one tag history also 
+git show <tag_name>
+
+Tagging Later
+You can also tag commits after you’ve moved past them. Suppose your commit history looks like this:
+
+
+I forgot to tag in "new line " commit as it was the start of new project or new feature in my app 
+then , I'll tag that commit this way 
+git tag -a <tag name > <commit hash>
+e.g
+git tag -a new_feature new line
+ 
+Sharing Tags
+By default, the git push command doesn’t transfer tags to remote servers. 
+You will have to explicitly push tags to a shared server after you have created them. 
+This process is just like sharing remote branches — you can run 
+git push origin <tagname>.
+git push origin new-feature
+
+now check on github repo 
+
+
+one tag generated at remote repo
+if you have more than one or like 100 tags you can push them at once 
+ git push origin --tags
+
+Deleting Tags
+To delete a tag on your local repository, you can use 
+git tag -d <tagname>
+For example, we could remove our lightweight tag above as follows:
+git tag -d new-feature
+Remove from server
+But does not remove the tag from any remote servers. 
+There are two common variations for deleting a tag from a remote server.
+
+The first way  :
+git push <remote> :refs/tags/<tagname>:
+git push origin :refs/tags/v1.4-lw
+To /git@github.com:schacon/simplegit.git
+ - [deleted]         v1.4-lw
+The way to interpret the above is to read it as the null value before the colon is being pushed to the remote tag name, effectively deleting it.
+
+The second way :
+simply type :
+$ git push origin --delete <tagname>
+
+Checking out Tags
+If you want to view the versions of files a tag is pointing to, you can do a git checkout of that tag, although this puts your repository in a “detached HEAD” state, which has some ill side effects:
+git checkout v2.0.0
+Note: switching to 'v2.0.0'.
+
+
+
+
+SSH key problem solved
+Testing pull requests with collaborator 
+Testing pull requests with fork method
+Testing git merge 
+Testing git rebase 
+Testing interactive rebase
+Testing merge conflict different situations 
+Testing git cloning process 
+Testing gist
+Testing cherry pick
+Testing  pull , push , fetch difference
+
+ 
+
+
+                                                                                                            HTML
+HTML Tags 
+
+Basic HTML : 
+<!DOCTYPE>   Defines the document type
+<html>   Defines an HTML document
+<head>   Contains metadata/information for the document
+<title>   Defines a title for the document
+<body>    Defines the document's body
+<h1> to <h6>    Defines HTML headings
+<p>     Defines a paragraph
+<br>   Inserts a single line break
+<hr>   Defines a thematic change in the content
+<!--...-->
+
+
+
+HTML-Formatting
+
+<abbr>   Defines an abbreviation or an acronym
+<address>  Defines contact information for the author/owner of a document/article
+<b>  Defines bold text
+<bdi>  Isolates a part of the text that might be formatted in a different direction from other text outside it
+<bdo>  Overrides the current text direction
+<blockquote>  Defines a section that is quoted from another source
+<cite>  Defines the title of a work
+<code>  Defines a piece of computer code
+<del>  Defines text that has been deleted from a document
+<dfn>   Specifies a term that is going to be defined within the content
+<em>   Defines emphasized text The content inside is typically displayed in italic.
+<i>   Defines a part of the text in an alternate voice or mood
+<ins>  Defines a text that has been inserted into a document
+<kbd>  Defines keyboard input
+<mark> Defines marked/highlighted text
+<meter>   Defines a scalar measurement within a known range (a gauge)
+<pre>   Defines preformatted text
+<progress> | Represents the progress of a task
+<q> | Defines a short quotation
+<rp> | Defines what to show in browsers that do not support ruby annotations
+<rt> | Defines an explanation/pronunciation of characters (for East Asian typography)
+<ruby> | Defines a ruby annotation (for East Asian typography)
+<s> | Defines text that is no longer correct
+<samp> | Defines sample output from a computer program
+<small> | Defines smaller text
+<strong> | Defines important text
+<sub> | Defines subscripted text
+<sup> | Defines superscripted text
+<template> | Defines a container for content that should be hidden when the page loads
+<time> | Defines a specific time (or DateTime)
+<u> | Defines some text that is unarticulated and styled differently from normal text
+<ul>  unordered list 
+<ol>  ordered list 
+<var> | Defines a variable
+<wbr> | Defines a possible line-break 
+
+
+
+
+
+Forms and Input
+
+<form> | Defines an HTML form for user input
+<input> | Defines an input control
+<textarea> | Defines a multiline input control (text area)
+<button> | Defines a clickable button
+<select> | Defines a drop-down list
+<optgroup> | Defines a group of related options in a drop-down list
+<option> | Defines an option in a drop-down list
+<label> | Defines a label for an <input> element
+<fieldset> | Groups related elements in a form
+<legend> | Defines a caption for a <fieldset> element
+<datalist> | Specifies a list of pre-defined options for input controls
+<output> | Defines the result of a calculation
